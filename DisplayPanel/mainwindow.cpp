@@ -5,7 +5,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow) {
+    ui(new Ui::MainWindow)
+{
     ui->setupUi(this);
     DebugLog("RGB Controller started");
     // disable some buttons etc
@@ -16,21 +17,28 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->blueButton->setEnabled(false);
     // we will first populate our serial list
     PopulateSerialList();
-    r = 0;
-    g = 0;
-    b = 0;
+   r = 0;
+   g = 0;
+   b = 0;
 }
 
-MainWindow::~MainWindow() {
+MainWindow::~MainWindow()
+{
     delete ui;
 }
 
-void MainWindow::DebugLog(QString Text) { // displays debug information
+void MainWindow::DebugLog(QString Text)
+{ // displays debug information
     ui->DebugOutput->append(Text);
 }
 
 void MainWindow::PopulateSerialList()
 { // this function will populate our serial port list
+    // first remove all the current items
+    for (int x = 0; x < ui->SerialList->count() + 1; x++)
+    {
+        ui->SerialList->removeItem(x);
+    }
     for (int x = 0; x < QSerialPortInfo::availablePorts().size(); x++)
     {
         if (!QSerialPortInfo::availablePorts().at(x).description().isEmpty())
@@ -59,6 +67,7 @@ void MainWindow::on_ConnectButton_clicked()
         ui->redButton->setEnabled(true);
         ui->greenButton->setEnabled(true);
         ui->blueButton->setEnabled(true);
+	ui->refreshButton->setEnabled(false);
     } else
     {
         DebugLog("Connection error..");
@@ -73,6 +82,7 @@ void MainWindow::on_DisconnectButton_clicked()
         ui->StatusInfoLabel->setText("<font color=red>Disconnected</font>");
         ui->DisconnectButton->setEnabled(false);
         ui->ConnectButton->setEnabled(true);
+	ui->refreshButton->setEnabled(true);
         ui->redButton->setEnabled(false);
         ui->greenButton->setEnabled(false);
         ui->blueButton->setEnabled(false);

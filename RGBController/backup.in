@@ -58,7 +58,7 @@ void loop()
 void render()
 {
 	display.clearDisplay();
-	writeText(0, 0, 2, "hello");
+	writeText(0, 0, 2, "text");
         display.display(); /* push and render oled */
 }
 

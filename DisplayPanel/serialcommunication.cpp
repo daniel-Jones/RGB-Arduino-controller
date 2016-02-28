@@ -43,8 +43,8 @@ bool SerialCommunication::SerialDisconnect()
 void SerialCommunication::rgbChange(int r, int g, int b)
 {
     data = "";
-    data.append(QString::number(r) + "," + QString::number(g) + "," + QString::number(b) + "\n");
-    qDebug(data);
+    data.append("0" + QString::number(r) + "," + QString::number(g) + "," + QString::number(b) + "\n");
+    //qDebug("Sending: " + data);
     if (serial.isOpen())
         serial.write(data);
 }
